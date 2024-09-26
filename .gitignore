@@ -1,0 +1,41 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Auto-generated VS/MD solution and project files
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Ignore Visual Studio temporary files
+.vs/
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# Ignore crash data
+*.crash
+
+# Ignore Packed Assets
+[Pp]ackages/manifest.json
+
+# Ignore JetBrains Rider project files
+.idea/
+
