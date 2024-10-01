@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;  
 
 public class BirdScript : MonoBehaviour
 {
     public Rigidbody2D myRigidbody;
-    public float flapStrength = 5f;  
-    public float gravityScale = 1f;  
+    public float flapStrength = 5f;
+    public float gravityScale = 1f;
     private bool gameStarted;
+    public bool gameOver = false;  
 
     void Start()
     {
@@ -18,21 +18,52 @@ public class BirdScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!gameOver)
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!gameStarted)
+                {
+                    gameStarted = true;
+                }
+                Flap();
+            }
             if (!gameStarted)
             {
-                gameStarted = true; 
+                myRigidbody.velocity = Vector2.zero;
             }
-            Flap();  
         }
-        if (!gameStarted)
+
+        
+        if (transform.position.y > Camera.main.orthographicSize || transform.position.y < -Camera.main.orthographicSize)
         {
-            myRigidbody.velocity = Vector2.zero;
+            GameOver();
         }
     }
+
     void Flap()
     {
         myRigidbody.velocity = new Vector2(0, flapStrength);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pipe"))
+        {
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+        gameOver = true;
+        myRigidbody.velocity = Vector2.zero;
+        
+        Invoke("RestartGame", 1f);  
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 }
