@@ -1,52 +1,68 @@
 using UnityEngine;
-using UnityEngine.UI;  // For UI elements
-using TMPro;  // For TextMeshPro support
+using UnityEngine.UI; // For UI elements
+using TMPro; // For TextMeshPro support
 
 public class ScoreManager : MonoBehaviour
 {
-    // Allow assignment of either Unity's Text or TextMeshPro
-    public Text scoreText;             // For Unity UI Text
+    // References to the UI text components
+    public Text scoreText; // For Unity's UI Text
     public TextMeshProUGUI scoreTextTMP; // For TextMeshPro UI Text
-    public int score = 0;              // Current score
-    public int highScore = 0;          // High score tracking
-    public int scoreMultiplier = 1;    // Multiplier for score (can be adjusted)
+
+    // Score variables
+    private int score = 0; // Current score
+    public int highScore = 0; // High score tracking
+    private const string HighScoreKey = "HighScore"; // Key for PlayerPrefs
 
     void Start()
     {
-        // Initialize the score display
+        // Load the high score from PlayerPrefs
+        highScore = PlayerPrefs.GetInt(HighScoreKey, 0);
         UpdateScoreText();
     }
 
-    // Call this method to increase the score
+    // Method to add score based on pipes passed
     public void AddScore(int amount)
     {
-        score += amount * scoreMultiplier;  // Increase score by the amount multiplied by multiplier
-        if (score > highScore)               // Check if current score exceeds high score
-        {
-            highScore = score;               // Update high score
-            Debug.Log("New High Score: " + highScore);
-        }
-        UpdateScoreText();                   // Update the UI text
+        score += amount; // Increment the score by the amount passed (1 in this case)
+        CheckHighScore(); // Check if we have a new high score
+        UpdateScoreText(); // Update the UI text
     }
 
-    // Method to update the score text UI
+    // Method to check and update the high score
+    private void CheckHighScore()
+    {
+        if (score > highScore)
+        {
+            highScore = score; // Update high score
+            PlayerPrefs.SetInt(HighScoreKey, highScore); // Save it to PlayerPrefs
+            PlayerPrefs.Save(); // Ensure it is saved
+            Debug.Log("New High Score: " + highScore); // Debug log for high score
+        }
+    }
+
+    // Method to update the score display
     private void UpdateScoreText()
     {
-        // Update the appropriate score text based on what's assigned
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + score;  // Update the score display for Unity UI Text
+            scoreText.text = "Score: " + score; // Update score text
         }
         if (scoreTextTMP != null)
         {
-            scoreTextTMP.text = "Score: " + score;  // Update the score display for TextMeshPro
+            scoreTextTMP.text = "Score: " + score; // Update score text for TextMeshPro
         }
     }
 
     // Method to reset the score when restarting the game
     public void ResetScore()
     {
-        score = 0;
-        UpdateScoreText();  // Reset score display
+        score = 0; // Reset score to 0
+        UpdateScoreText(); // Update display
+    }
+
+    // Optional: Display high score (if needed)
+    public void DisplayHighScore(Text highScoreText)
+    {
+        highScoreText.text = "High Score: " + highScore; // Update high score display
     }
 }
