@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;  // For UI elements
+using UnityEngine.UI;  
 
 public class BirdScript : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class BirdScript : MonoBehaviour
     private bool gameStarted;
     public bool gameOver = false;
 
-    public GameObject gameOverUI;  // Reference to the Game Over UI (Canvas)
+    public GameObject gameOverUI;  
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class BirdScript : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         gameStarted = false;
 
-        // Initially, hide the Game Over UI
+      
         gameOverUI.SetActive(false);
     }
 
@@ -36,11 +36,11 @@ public class BirdScript : MonoBehaviour
             }
             if (!gameStarted)
             {
-                myRigidbody.velocity = Vector2.zero; // Prevent movement before the game starts
+                myRigidbody.velocity = Vector2.zero;
             }
         }
 
-        // Check for out-of-bounds to trigger Game Over (optional)
+        
         if (transform.position.y > Camera.main.orthographicSize || transform.position.y < -Camera.main.orthographicSize)
         {
             GameOver();
@@ -54,7 +54,7 @@ public class BirdScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check for collision with pipes
+        
         if (collision.gameObject.CompareTag("Pipe"))
         {
             GameOver();
@@ -64,18 +64,18 @@ public class BirdScript : MonoBehaviour
     void GameOver()
     {
         gameOver = true;
-        myRigidbody.velocity = Vector2.zero;  // Stop the bird's movement
+        myRigidbody.velocity = Vector2.zero;  
 
-        // Show the Game Over UI
+        
         if (gameOverUI != null)
         {
-            gameOverUI.SetActive(true);  // Activate the UI
+            gameOverUI.SetActive(true);  
         }
     }
 
-    // Method to restart the game, linked to the Restart button
+   
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // Restart the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 }
