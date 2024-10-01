@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;  
 
 public class BirdScript : MonoBehaviour
 {
@@ -10,7 +9,8 @@ public class BirdScript : MonoBehaviour
     private bool gameStarted;
     public bool gameOver = false;
 
-    public GameObject gameOverUI;  
+    public GameObject gameOverUI;
+    private ScoreManager scoreManager;
 
     void Start()
     {
@@ -18,8 +18,8 @@ public class BirdScript : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         gameStarted = false;
 
-      
         gameOverUI.SetActive(false);
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void Update()
@@ -40,7 +40,6 @@ public class BirdScript : MonoBehaviour
             }
         }
 
-        
         if (transform.position.y > Camera.main.orthographicSize || transform.position.y < -Camera.main.orthographicSize)
         {
             GameOver();
@@ -54,28 +53,32 @@ public class BirdScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        
         if (collision.gameObject.CompareTag("Pipe"))
         {
             GameOver();
         }
     }
 
-    void GameOver()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        gameOver = true;
-        myRigidbody.velocity = Vector2.zero;  
-
-        
-        if (gameOverUI != null)
+        if (other.CompareTag("ScoreZone"))
         {
-            gameOverUI.SetActive(true);  
+            scoreManager.AddScore(1);
+            Debug.Log("ScoreZone entered! Score: " + scoreManager.score); 
         }
     }
 
-   
+    void GameOver()
+    {
+        gameOver = true;
+        myRigidbody.velocity = Vector2.zero;
+        gameOverUI.SetActive(true);
+    }
+
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
+
