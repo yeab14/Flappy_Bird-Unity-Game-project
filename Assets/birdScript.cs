@@ -10,9 +10,6 @@ public class BirdScript : MonoBehaviour
     public bool gameOver = false;
 
     public GameObject gameOverUI;
-    private ScoreManager scoreManager;
-
-    private float lastPipeXPosition = 0f; // Track the last pipe's x position
 
     void Start()
     {
@@ -21,7 +18,6 @@ public class BirdScript : MonoBehaviour
         gameStarted = false;
 
         gameOverUI.SetActive(false);
-        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void Update()
@@ -40,18 +36,8 @@ public class BirdScript : MonoBehaviour
             {
                 myRigidbody.velocity = Vector2.zero;
             }
-
-            // Check if the bird passes the last pipe
-            if (transform.position.x > lastPipeXPosition)
-            {
-                lastPipeXPosition = transform.position.x; // Update last pipe position
-                PipeSpawnScript.IncrementPipesPassed(); // Increment pipes passed
-                scoreManager.AddScore(1); // Add score
-                Debug.Log("Pipes Passed: " + PipeSpawnScript.pipesPassed);
-            }
         }
 
-        // Check if the bird goes out of screen boundaries
         if (transform.position.y > Camera.main.orthographicSize || transform.position.y < -Camera.main.orthographicSize)
         {
             GameOver();
@@ -76,10 +62,6 @@ public class BirdScript : MonoBehaviour
         gameOver = true;
         myRigidbody.velocity = Vector2.zero;
         gameOverUI.SetActive(true);
-        // Add the final score based on pipes passed
-        scoreManager.AddScore(PipeSpawnScript.pipesPassed); // Add the number of pipes passed to the score
-        PipeSpawnScript.pipesPassed = 0; // Reset pipes passed for the next game
-        scoreManager.ResetScore(); // Reset score for the next game
     }
 
     public void RestartGame()

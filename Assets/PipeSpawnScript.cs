@@ -15,9 +15,6 @@ public class PipeSpawnScript : MonoBehaviour
     private float timer = 0f;
     private float currentSpawnRate;
 
-    // Static variable to track pipes passed
-    public static int pipesPassed = 0;
-
     void Start()
     {
         currentSpawnRate = initialSpawnRate;
@@ -37,7 +34,7 @@ public class PipeSpawnScript : MonoBehaviour
     {
         GameObject pipe = Instantiate(pipePrefab, Vector3.zero, Quaternion.identity);
 
-        // Determine the Y position for the pipes and instantiate them
+        
         if (Random.Range(0, 2) == 0)
         {
             float topPipeY = spawnPosition.y + (fixedGapHeight / 2) + Random.Range(-heightOffset, heightOffset);
@@ -50,11 +47,5 @@ public class PipeSpawnScript : MonoBehaviour
         }
 
         currentSpawnRate = Mathf.Max(minSpawnRate, currentSpawnRate - difficultyIncreaseRate);
-    }
-
-    // Method to increment pipes passed
-    public static void IncrementPipesPassed()
-    {
-        pipesPassed++;
     }
 }
