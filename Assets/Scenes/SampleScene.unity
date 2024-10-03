@@ -255,6 +255,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231737115}
   m_CullTransparentMesh: 1
+--- !u!1 &232146498 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+  m_PrefabInstance: {fileID: 1437780996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &232146504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232146498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb71c4275bb8443b25d38162fcfd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPrefab: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+  initialSpawnRate: 2
+  minSpawnRate: 1
+  difficultyIncreaseRate: 0.05
+  spawnPosition: {x: 8.29, y: 0.44}
+  heightOffset: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +871,8 @@ MonoBehaviour:
   gravityScale: 1
   gameOver: 0
   gameOverUI: {fileID: 914727119}
+  eatRadius: 3
+  eatEffect: {fileID: 0}
 --- !u!58 &1251662555
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -880,9 +905,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.20855044, y: -0.37529424}
+  m_Offset: {x: -0.0707696, y: -0.12635902}
   serializedVersion: 2
-  m_Radius: 2.3084044
+  m_Radius: 2.8204937
 --- !u!1 &1292043857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,8 +1101,28 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1827243819369899594, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      propertyPath: m_Radius
+      value: 2.5642397
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827243819369899594, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.11569166
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827243819369899594, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.057849646
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827243819369899594, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
       propertyPath: m_Name
+      value: Fruit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      propertyPath: m_TagString
       value: Fruit
       objectReference: {fileID: 0}
     - target: {fileID: 7166537095788603181, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
@@ -1123,8 +1168,61 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 232146504}
   m_SourcePrefab: {fileID: 100100000, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+--- !u!1 &1606621978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1606621980}
+  - component: {fileID: 1606621979}
+  m_Layer: 0
+  m_Name: FruitSpawner
+  m_TagString: Fruit
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1606621979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606621978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb71c4275bb8443b25d38162fcfd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPrefab: {fileID: 3562257504453802434, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+  initialSpawnRate: 2
+  minSpawnRate: 1
+  difficultyIncreaseRate: 0.05
+  spawnPosition: {x: 8.29, y: 0.44}
+  heightOffset: 1
+--- !u!4 &1606621980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606621978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.9485373, y: 0.07, z: -0.12309129}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668661553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,3 +1522,4 @@ SceneRoots:
   - {fileID: 914727123}
   - {fileID: 762826822}
   - {fileID: 1437780996}
+  - {fileID: 1606621980}

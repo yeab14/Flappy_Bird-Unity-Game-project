@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pipe
   - ' ScoreZone'
+  - Fruit
   layers:
   - Default
   - TransparentFX

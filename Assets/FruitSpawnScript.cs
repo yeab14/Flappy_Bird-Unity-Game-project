@@ -32,14 +32,13 @@ public class FruitSpawnScript : MonoBehaviour
     void SpawnFruit()
     {
         GameObject fruit = Instantiate(fruitPrefab, Vector3.zero, Quaternion.identity);
+        fruit.tag = "Fruit"; 
+        float fruitY = spawnPosition.y + Random.Range(-heightOffset, heightOffset);
+        fruit.transform.position = new Vector3(spawnPosition.x, fruitY, 0);
 
-        // Randomize the Y position of the fruit within the height offset range
-        float randomY = spawnPosition.y + Random.Range(-heightOffset, heightOffset);
-        fruit.transform.position = new Vector3(spawnPosition.x, randomY, 0);
-
-        // Adjust the spawn rate for increased difficulty
         currentSpawnRate = Mathf.Max(minSpawnRate, currentSpawnRate - difficultyIncreaseRate);
     }
+
 }
 
 
