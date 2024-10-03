@@ -20,6 +20,8 @@ public class BirdScript : MonoBehaviour
     private float slowMotionDuration = 1f;
     private float cameraShakeAmount = 0.1f;
 
+    private ScoreManager scoreManager; // Reference to ScoreManager
+
     void Start()
     {
         myRigidbody.gravityScale = gravityScale;
@@ -27,6 +29,9 @@ public class BirdScript : MonoBehaviour
         gameStarted = false;
 
         gameOverUI.SetActive(false);
+
+        // Find the ScoreManager in the scene
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void Update()
@@ -80,6 +85,12 @@ public class BirdScript : MonoBehaviour
         if (eatEffect != null)
         {
             Instantiate(eatEffect, fruit.transform.position, Quaternion.identity);
+        }
+
+        // Notify the ScoreManager that a fruit has been eaten
+        if (scoreManager != null)
+        {
+            scoreManager.AddScore(1); // Assuming each fruit is worth 1 point
         }
 
         StartCoroutine(ShrinkAndDestroyFruit(fruit));
@@ -158,5 +169,3 @@ public class BirdScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-
-

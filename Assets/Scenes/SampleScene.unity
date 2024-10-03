@@ -873,6 +873,8 @@ MonoBehaviour:
   gameOverUI: {fileID: 914727119}
   eatRadius: 3
   eatEffect: {fileID: 0}
+  crashEffect: {fileID: 0}
+  mainCamera: {fileID: 519420031}
 --- !u!58 &1251662555
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -905,9 +907,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0707696, y: -0.12635902}
+  m_Offset: {x: 0.43205103, y: 0.25005808}
   serializedVersion: 2
-  m_Radius: 2.8204937
+  m_Radius: 1.7645718
 --- !u!1 &1292043857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1056,7 @@ GameObject:
   - component: {fileID: 1400733365}
   m_Layer: 0
   m_Name: PipeSpawner
-  m_TagString: Untagged
+  m_TagString: Pipe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1074,7 +1076,7 @@ MonoBehaviour:
   pipePrefab: {fileID: 6172199700231339334, guid: 14ae8219971404141b7e894ceb630add, type: 3}
   initialSpawnRate: 2
   minSpawnRate: 1
-  difficultyIncreaseRate: 0.05
+  difficultyIncreaseRate: 0.06
   fixedGapHeight: 2
   spawnPosition: {x: 8.29, y: 0.44}
   heightOffset: 0
@@ -1173,6 +1175,30 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 232146504}
   m_SourcePrefab: {fileID: 100100000, guid: 0189172923d044b4e9ac12a8d933c6ed, type: 3}
+--- !u!1 &1446513840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6172199700231339334, guid: 14ae8219971404141b7e894ceb630add, type: 3}
+  m_PrefabInstance: {fileID: 637779241158200685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1446513846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446513840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b97f7b29d8a39428ab846fbb23c84e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pipePrefab: {fileID: 6172199700231339334, guid: 14ae8219971404141b7e894ceb630add, type: 3}
+  initialSpawnRate: 3
+  minSpawnRate: 1
+  difficultyIncreaseRate: 0.05
+  fixedGapHeight: 2.5
+  spawnPosition: {x: 8.29, y: 0.44}
+  heightOffset: 1
 --- !u!1 &1606621978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,19 +1509,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4691615065168727316, guid: 14ae8219971404141b7e894ceb630add, type: 3}
       propertyPath: m_Size.x
-      value: 2.4712002
+      value: 0.9091821
       objectReference: {fileID: 0}
     - target: {fileID: 4691615065168727316, guid: 14ae8219971404141b7e894ceb630add, type: 3}
       propertyPath: m_Size.y
-      value: 2.5051875
+      value: 2.1927855
       objectReference: {fileID: 0}
     - target: {fileID: 4691615065168727316, guid: 14ae8219971404141b7e894ceb630add, type: 3}
       propertyPath: m_Offset.x
-      value: 0.2543999
+      value: -0.40164447
       objectReference: {fileID: 0}
     - target: {fileID: 4691615065168727316, guid: 14ae8219971404141b7e894ceb630add, type: 3}
       propertyPath: m_Offset.y
-      value: 0.04340005
+      value: 0.04339993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691615065168727316, guid: 14ae8219971404141b7e894ceb630add, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6172199700231339334, guid: 14ae8219971404141b7e894ceb630add, type: 3}
       propertyPath: m_Name
@@ -1508,7 +1538,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6172199700231339334, guid: 14ae8219971404141b7e894ceb630add, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1446513846}
   m_SourcePrefab: {fileID: 100100000, guid: 14ae8219971404141b7e894ceb630add, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

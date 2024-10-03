@@ -20,7 +20,7 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText();
     }
 
-    // Method to add score based on pipes passed
+    // Method to add score based on fruits eaten
     public void AddScore(int amount)
     {
         score += amount; // Increment the score by the amount passed (1 in this case)
