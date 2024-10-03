@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BirdScript : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class BirdScript : MonoBehaviour
     public GameObject gameOverUI;
     public float eatRadius = 2.0f; // Proximity radius for eating the fruit
     public ParticleSystem eatEffect; // Optional particle effect when fruit is eaten
+    public ParticleSystem crashEffect; // Particle effect for pipe collision
+    public Camera mainCamera;
+
+    private float originalTimeScale = 1f;
+    private float slowMotionFactor = 0.2f;
+    private float slowMotionDuration = 1f;
+    private float cameraShakeAmount = 0.1f;
 
     void Start()
     {
@@ -69,19 +77,15 @@ public class BirdScript : MonoBehaviour
 
     void EatFruit(GameObject fruit)
     {
-        // Play an optional particle effect
         if (eatEffect != null)
         {
             Instantiate(eatEffect, fruit.transform.position, Quaternion.identity);
         }
 
-        // Shrink the fruit before destroying it
         StartCoroutine(ShrinkAndDestroyFruit(fruit));
-
         Debug.Log("Bird ate the fruit!");
     }
 
-    // Shrinking effect
     System.Collections.IEnumerator ShrinkAndDestroyFruit(GameObject fruit)
     {
         float shrinkDuration = 0.5f;
@@ -99,11 +103,60 @@ public class BirdScript : MonoBehaviour
         Destroy(fruit);
     }
 
+    // Detect if bird touches the pipe
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Pipe"))
+        {
+            // The bird has touched the pipe; trigger game over with effects
+            if (crashEffect != null)
+            {
+                Instantiate(crashEffect, transform.position, Quaternion.identity);
+            }
+            StartCoroutine(HandleSlowMotion());
+            StartCoroutine(CameraShake());
+            GameOver();
+        }
+    }
+
+    // Slow-motion effect coroutine
+    System.Collections.IEnumerator HandleSlowMotion()
+    {
+        Time.timeScale = slowMotionFactor;
+        yield return new WaitForSecondsRealtime(slowMotionDuration);
+        Time.timeScale = originalTimeScale;
+    }
+
+    // Camera shake effect coroutine
+    System.Collections.IEnumerator CameraShake()
+    {
+        Vector3 originalPos = mainCamera.transform.position;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < slowMotionDuration)
+        {
+            float xOffset = Random.Range(-cameraShakeAmount, cameraShakeAmount);
+            float yOffset = Random.Range(-cameraShakeAmount, cameraShakeAmount);
+
+            mainCamera.transform.position = new Vector3(originalPos.x + xOffset, originalPos.y + yOffset, originalPos.z);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        mainCamera.transform.position = originalPos;
+    }
+
     void GameOver()
     {
         gameOver = true;
         myRigidbody.velocity = Vector2.zero;
         gameOverUI.SetActive(true);
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
+
 

@@ -32,9 +32,23 @@ public class PipeSpawnScript : MonoBehaviour
 
     void SpawnPipe()
     {
+        // Instantiate the pipe from the prefab
         GameObject pipe = Instantiate(pipePrefab, Vector3.zero, Quaternion.identity);
 
-        
+        // Ensure the spawned pipe has the "Pipe" tag
+        pipe.tag = "Pipe";
+
+        // Add or get a BoxCollider2D component
+        BoxCollider2D pipeCollider = pipe.GetComponent<BoxCollider2D>();
+        if (pipeCollider == null)
+        {
+            pipeCollider = pipe.AddComponent<BoxCollider2D>();
+        }
+
+        // Ensure the collider is set as a trigger
+        pipeCollider.isTrigger = true;
+
+        // Set the position of the pipe (either top or bottom)
         if (Random.Range(0, 2) == 0)
         {
             float topPipeY = spawnPosition.y + (fixedGapHeight / 2) + Random.Range(-heightOffset, heightOffset);
@@ -46,6 +60,8 @@ public class PipeSpawnScript : MonoBehaviour
             pipe.transform.position = new Vector3(spawnPosition.x, bottomPipeY, 0);
         }
 
+        // Adjust spawn rate to increase difficulty
         currentSpawnRate = Mathf.Max(minSpawnRate, currentSpawnRate - difficultyIncreaseRate);
     }
 }
+
